@@ -58,19 +58,24 @@ const Page = () => {
     const userInfo = prompt.length > 0 ? prompt[0].userId : null;
 
     return (
-        <div >
+        <div>
             {userInfo && (
-                <div className=' w-full flex justify-between -mt-10 border border-green-100 p-5 px-10 items-center'>
-                    <img src={userInfo.image} className='h-25 border-3 w-25 rounded-full' alt="image" />
-                    <div>
-                        <h1 className='text-2xl font-bold'>{userInfo.username}</h1>
-                        <p>{userInfo.email}</p>
-                    </div>
-                </div>
+   <div className="w-full flex flex-col md:flex-row items-center justify-between bg-white shadow-md border border-green-100 p-6 rounded-lg">
+   <img 
+       src={userInfo.image} 
+       className="h-24 w-24 border-4 border-green-300 rounded-full object-cover" 
+       alt="User Profile"
+   />
+   <div className="text-center md:text-left mt-4 md:mt-0">
+       <h1 className="text-2xl font-bold text-gray-800">{userInfo.username}</h1>
+       <p className="text-gray-600">{userInfo.email}</p>
+   </div>
+</div>
+
             )}
             <h1 className='text-3xl font-bold flex justify-center p-5'>Prompts</h1>
             {session?.user?._id === id ? (
-                <div className='grid grid-cols-2 gap-4 p-4'>
+                <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 p-4'>
                     {prompt.map((prompt) => (
                         <div key={prompt._id} className='flex flex-col border border-gray-300 p-4'>
                             {prompt.userId && (
@@ -102,7 +107,7 @@ const Page = () => {
                 :
 
                 (
-                    <div className='grid grid-cols-2 gap-4 p-4'>
+                    <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 p-4'>
                         {prompt.map((prompt) => (
                             <div key={prompt._id} className='flex flex-col border border-gray-300 p-4'>
                                 {prompt.userId && (

@@ -1,28 +1,25 @@
 "use client"
 
-import React from 'react'
-import { useState } from 'react'
-import Link from 'next/link'
+import React, { useState } from 'react';
+import Link from 'next/link';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
+const Page = () => {
+  const [submitting, setSubmitting] = useState(false);
+  const { data: session } = useSession();
+  const router = useRouter();
 
-const page = () => {
-
-  const [submitting, setsubmitting] = useState(false)
-  const {data:session} = useSession()
-
-  const [post, setpost] = useState({
+  const [post, setPost] = useState({
     prompt: '',
     tag: '',
-  })
+  });
 
-
-
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      setsubmitting(true)
-      const res = await fetch("/api/prompt/new", {   
+    try {
+      setSubmitting(true);
+      await fetch("/api/prompt/new", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,48 +30,53 @@ const page = () => {
           tag: post.tag,
         }),
       });
-
-    }catch(error){
-      console.log(error)
-    }finally{
-      setsubmitting(false)
-      setpost({prompt:"", tag:""})
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSubmitting(false);
+      setPost({ prompt: "", tag: "" });
     }
-      
-  }
-
+  };
 
   return (
-    <div className='w-full flex justify-center items-center flex-col' >
-      <h1 className='text-2xl font-serif ml-40' >Create you blog</h1>
-      <form onSubmit={handleSubmit} className='flex flex-col w-full justify-center items-center '>
+    <div className='w-full flex flex-col items-center px-4 sm:px-8 md:px-16 lg:px-32'>
+      <h1 className='text-2xl md:text-3xl font-serif text-center mt-8'>Create Your Blog</h1>
+      <form 
+        onSubmit={handleSubmit} 
+        className='flex flex-col w-full max-w-2xl mt-6'
+      >
         <textarea
-          placeholder="Enter the blog description"
+          placeholder='Enter the blog description'
           value={post.prompt}
-          className="w-2/6 mt-10 p-5 border border-r-8 border-gray-300 rounded-md text-lg resize-none overflow-hidden"
-          onChange={(e) => setpost({...post , prompt:e.target.value})}
+          className='w-full mt-4 p-4 border border-gray-300 rounded-md text-lg resize-none overflow-hidden'
+          onChange={(e) => setPost({ ...post, prompt: e.target.value })}
           onInput={(e) => {
             e.target.style.height = "auto";
             e.target.style.height = e.target.scrollHeight + "px";
           }}
         />
-        <input type="text" placeholder='Enter the tag'
+        <input 
+          type='text' 
+          placeholder='Enter the tag'
           value={post.tag}
-          className='w-2/6 h-10 pl-5 mt-16 border border-gray-100 rounded-md text-lg'
-          onChange={(e) => setpost({...post, tag:e.target.value})}
-
+          className='w-full h-12 pl-4 mt-6 border border-gray-300 rounded-md text-lg'
+          onChange={(e) => setPost({ ...post, tag: e.target.value })}
         />
-        <div className='flex gap-10 mt-12 justify-between items-center'>
-          <Link href="/" className='text-blue-600'>
-          Cancel
+        <div className='flex flex-col sm:flex-row gap-6 mt-8 justify-between'>
+          <Link href='/' className='text-blue-600 text-center sm:text-left'>
+            Cancel
           </Link>
-          <button type='submit' className='p-3 bg-blue-400 hover:bg-gray-400 hover:text-black border rounded-full border-black shadow-2xl'>{submitting ? "Create..." : "Create"}</button>
+          <button 
+            type='submit' 
+            className='px-6 py-3 bg-blue-500 text-white hover:bg-gray-600 rounded-full border border-black shadow-lg w-full sm:w-auto'
+          >
+            {submitting ? "Creating..." : "Create"}
+          </button>
         </div>
-
-      
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default Page;
