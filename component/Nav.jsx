@@ -5,13 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Menu, X } from "lucide-react";
+import {Loader} from "lucide-react"
 
 const Nav = () => {
   const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = useState(false);
 
   if (status === "loading") {
-    return <p>Loading...</p>;
+    return <div className="w-full h-screen flex justify-center items-center "><Loader className="h-36 w-36" /></div>;
   }
 
   return (

@@ -3,13 +3,14 @@
   import Feed from '@component/Feed';
   import React from 'react';
   import { useSession } from 'next-auth/react';
+  import {Loader} from "lucide-react"
 
   export default function Home() {
 
     const { data: session, status } = useSession();
 
     if(status === "loading"){
-      <p>hdafkhakdsfhafg</p>
+      <p><Loader/></p>
       return
     }
 
