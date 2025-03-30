@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const PromptSchema = new mongoose.Schema({
     userId: {
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: "User", 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
         required: true,
     },
     prompt: {
@@ -14,7 +14,7 @@ const PromptSchema = new mongoose.Schema({
         type: String,
         required: true,
     }
-});
+}, { timestamps: true }); // 
 
 const Prompt = mongoose.models.Prompt || mongoose.model("Prompt", PromptSchema);
 
