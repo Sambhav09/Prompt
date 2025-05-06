@@ -59,7 +59,8 @@ const Feed = () => {
               <br />
               <p className="text-xl">{prompt.prompt}</p>
               <div className="flex">
-                #<p className="text-blue-400">{prompt.tag}</p>
+                {/* #<p className="text-blue-400">{prompt.tag}</p> */}
+                <button onClick={() => setTag(prompt.tag)} className="text-blue-400">#{prompt.tag}</button>
               </div>
             </div>
           ))
